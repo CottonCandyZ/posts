@@ -1,0 +1,10 @@
+---
+title: 'WebAuthn 两三事儿'
+date: '2024-04-12T08:52:49.127Z'
+tags:
+  - 'Auth'
+  - 'Session'
+abstract: '为了搭建评论区，需要实现用户的登录注册和账户管理，可能使用诸如邮箱（magic link），手机号等验证方式，但都会一定程度的泄漏隐私，而且并不方便。WebAuthn 就是为了解决这些问题而生，同时更加安全，且易于管理。我将会简单介绍一下 WebAuthn 的验证方式，同时讲讲我在评论区中如何实现它的'
+---
+
+WebAuthn（Web Authentication API）是用非对称加密实现用户验证的，其具体应当是使用了数字签名，也就是用私钥签名和公钥解密。因此注册过程实际上就是在分发公钥，验证过程就是在验证签名。在注册与验证的过程中，其实际需要维护一个 Session，也就是 [challenge](https://w3c.github.io/webauthn/#dom-publickeycredentialcreationoptions-challenge)，这主要是为了避免重放攻击。但是奇怪的是，明明有 TLS，为何仍需要避免？
