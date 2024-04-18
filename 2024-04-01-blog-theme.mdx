@@ -4,7 +4,7 @@ date: '2024-04-01T05:05:17.421Z'
 tags:
   - 'Next.js'
   - 'React.js'
-abstract: '可能你已经注意到了，点击 Header 的 Cotton Candy 可以更换主题，同时它会使用 LocalStorage 记住。如果我们想用 Next.js 做一个主题切换，同时能够记住，事情就会变得有点复杂，这将有关 Next.js 的 Render 方式，让我们一起探索一下。'
+abstract: '可能你已经注意到了，点击 Header 的 Cotton Candy 可以更换主题，同时它会使用 LocalStorage 记住。如果我们想用 Next.js 做一个主题切换，同时能够记住，事情就会变得有点复杂，这将有关 Next.js 的 Render 方式...'
 ---
 
 本来是想要在每一次刷新的时候，自动更换主题。如果是用 vite 或者 parcel，不配置，构建一个 SPA，理论上实现这个过程很简单，只要是一个 Client Component 就会在每次 reload(F5) 的时候触发 [Re-render](https://react.dev/learn/render-and-commit#step-1-trigger-a-render), 而且还是 init-rerender，因此我们只需要准备一个 State，然后给他每次初始化一个随机数就行了。当然如果我们没有改主题的需求，那直接放在 Component 外面也行，就像下面这样。
