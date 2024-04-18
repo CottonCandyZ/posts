@@ -245,7 +245,7 @@ model Device {
 }
 ```
 
-注意到表里有个奇怪的东西 `aaguid`，我后面会说这是用来干嘛的。
+注意到表里有个奇怪的东西 `aaguid`，这个是用来方便在设备列表里[展现设备名称](https://web.dev/articles/webauthn-aaguid)的。
 
 至此注册过程其实就结束了，我上面再结束时使用了 `cookie().set()` 在 response 时设置了用户登录的 session。
 
