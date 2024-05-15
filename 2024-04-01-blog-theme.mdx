@@ -22,7 +22,7 @@ export function App() {
 
 [这里](https://nextjs.org/docs/app/building-your-application/rendering/server-components#how-are-server-components-rendered)说的其实还算清楚。大致流程如下
 
-1. 先生成 React Server Component Payload (RSC Payload)，没有 Client Component，为他们留了一些嵌入位置。另外注意数据实际上是分离的，方便做单独缓存。用 RSC 是为了保证我们在 Server Component 重新 fetch 数据时，嵌在 Server Component 里的 Client Component 的状态不会被重置，因为其用的是 RSC，而不是 HTML。注意数据是保存在 RSC 中的，这里有两种情况，第一种是 Static，此时构建 RSC Payload 的时间点是在 build 时，但是我们也可以手动使用 `revalidatePath` 或 `revalidateTag` 更新内容，构建好的 RSC Payload 会被放在 Full Route Cache 里，我在了解 [Nextjs 缓存](/posts/2024-05-07-from-next-cache-to-performance#路由下的缓存) 里有有聊到。第二种是 Dynamic，这将在请求时构建 RSC Payload。这两种情况下 fetch 的数据都会在 [Data Cache](/posts/2024-05-07-from-next-cache-to-performance#持久化缓存) 里缓存。
+1. 先生成 React Server Component Payload (RSC Payload)，没有 Client Component，为他们留了一些嵌入位置。用 RSC Payload 而不是 HTML 是为了保证我们在 Server Component 重新 fetch 数据时，嵌在 Server Component 里的 Client Component 的状态不会被重置。注意数据是保存在 RSC 中的，这里有两种情况，第一种是 Static，此时构建 RSC Payload 的时间点是在 build 时，但是我们也可以手动使用 `revalidatePath` 或 `revalidateTag` 更新内容，构建好的 RSC Payload 会被放在 Full Route Cache 里，我在了解 [Nextjs 缓存](/posts/2024-05-07-from-next-cache-to-performance#路由下的缓存) 里有有聊到。第二种是 Dynamic，这将在请求时构建 RSC Payload。这两种情况下 fetch 的数据都会在 [Data Cache](/posts/2024-05-07-from-next-cache-to-performance#持久化缓存) 里缓存。
 2. 然后用 RSC 和 Client Component 的**指导**生成 HTML。（这里的指导时原文的 instructions，很奇怪对吧，不是嵌进去一起渲染，而是“指导”）同时这里的 HTML 也会遵循上面的策略缓存。
 
 然后到了客户端，Next.js 会把 HTML, RSC, Client Component 发给客户端。HTML 用来作为最初预览，然后客户端会用剩下来的两个生成可交互的部分，而**嵌入**的方式是使用 [hydrate](https://react.dev/reference/react-dom/client/hydrateRoot)，实际上就是绑定一些事件监听器。
