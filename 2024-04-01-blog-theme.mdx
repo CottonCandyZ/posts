@@ -22,7 +22,7 @@ export function App() {
 
 [这里](https://nextjs.org/docs/app/building-your-application/rendering/server-components#how-are-server-components-rendered)说的其实还算清楚。大致流程如下
 
-1. 先生成 React Server Component Payload (RSC Payload)，没有 Client Component，为他们留了一些嵌入位置。另外注意数据实际上是分离的，方便做单独缓存。是用 RSC 的原因是因为当我们在 Server Component 重新 fetch 数据时，嵌在 Server Component 里的 Client Component 的状态不会被重置，因为其用的是 RSC，而不是 HTML。
+1. 先生成 React Server Component Payload (RSC Payload)，没有 Client Component，为他们留了一些嵌入位置。另外注意数据实际上是分离的，方便做单独缓存。用 RSC 是为了保证我们在 Server Component 重新 fetch 数据时，嵌在 Server Component 里的 Client Component 的状态不会被重置，因为其用的是 RSC，而不是 HTML。
 2. 然后用 RSC 和 Client Component 的**指导**生成 HTML。（这里的指导时原文的 instructions，很奇怪对吧，不是嵌进去一起渲染，而是“指导”）
 
 然后到了客户端，Next.js 会把 HTML, RSC, Client Component 发给客户端。HTML 用来作为最初预览，然后客户端会用剩下来的两个生成可交互的部分，而**嵌入**的方式是使用 [hydrate](https://react.dev/reference/react-dom/client/hydrateRoot)，实际上就是绑定一些事件监听器。
