@@ -9,7 +9,7 @@ abstract: '可能你已经注意到了，点击 Header 的 Cotton Candy 可以�
 
 本来是想要在每一次刷新的时候，自动更换主题。如果是用 vite 或者 parcel，不配置，构建一个 SPA，理论上实现这个过程很简单，只要是一个 Client Component 就会在每次 reload (F5) 的时候触发 [Re-render](https://react.dev/learn/render-and-commit#step-1-trigger-a-render), 而且还是 init-rerender，因此我们只需要准备一个 State，然后给他每次初始化一个随机数就行了。当然如果我们没有改主题的需求，那直接放在 Component 外面也行，就像下面这样。
 
-```TS
+```ts
 const randomThemeNumber = Math.floor(Math.random() * maxThemeNumber) + 1
 export function App() {
   return <div className={`theme-${randomThemeNumber}`}>{...}</div>;

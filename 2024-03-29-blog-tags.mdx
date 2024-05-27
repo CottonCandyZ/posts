@@ -21,7 +21,7 @@ abstract: '如果你尝试点击右边的 Tags 的话，会发现它的行为有
 
 计算当前可以选择的 Tags 应该直接放在父组件的函数体中，这样每次更新被选中的 Tag State 时，备选项就会自动更新。
 
-```TS
+```ts
 const [toggledTags, setToggledTags] = useState(new Set<string>());
 const otherTagsSet = new Set<string>();
 oTags.forEach((tags) => {
@@ -87,7 +87,7 @@ Oh，是交集。
 
 如果我们找到包含所选标签的文章，并尝试找一个交集，就应该找到了我们需要一同勾选的 Tags。在去除的时也是一样的，只要确定去除之后剩下的每一个 Tag 包含的文章的交集是否包含去除的那个 Tag，如果包含的话就一起去除。
 
-```TS
+```ts
 const toggle = (tagName: string) => {
   return () => {
     // 确定是移除还是新增

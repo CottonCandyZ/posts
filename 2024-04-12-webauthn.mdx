@@ -23,9 +23,9 @@ Challenge 会被 authenticator 签名，从而方便服务器验证所收到 pub
 
 ## 如何使用？
 
-其实 [webauthn.guide](https://webauthn.guide/) 讲的还蛮清楚的，配合 [simplewebauthn](https://simplewebauthn.dev/docs/packages/server) 的文档应该很好实现。但是问题的关键在于，我们需要用户提供什么，以及如果有数据库的话，该如何管理 Session 呢。既然不需要用户提供手机号，那我们应该只让用户提供用户名。那用户名作为 id 的话，如何避免重名认证呢？我的选择是在注册时生成一个 uuid 作为用户 [id](https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-id)，用户名则充当 [userName](https://w3c.github.io/webauthn/#dom-publickeycredentialentity-name)，其会在密钥设备上显示。除此之外，为了方便识别重名用户，再在数据库建一个自增字段 `label`。因此使用 Prisma 构建如下的用户 Schema（原谅我暂时还没有加 Prisma Syntax Highlighter）
+其实 [webauthn.guide](https://webauthn.guide/) 讲的还蛮清楚的，配合 [simplewebauthn](https://simplewebauthn.dev/docs/packages/server) 的文档应该很好实现。但是问题的关键在于，我们需要用户提供什么，以及如果有数据库的话，该如何管理 Session 呢。既然不需要用户提供手机号，那我们应该只让用户提供用户名。那用户名作为 id 的话，如何避免重名认证呢？我的选择是在注册时生成一个 uuid 作为用户 [id](https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-id)，用户名则充当 [userName](https://w3c.github.io/webauthn/#dom-publickeycredentialentity-name)，其会在密钥设备上显示。除此之外，为了方便识别重名用户，再在数据库建一个自增字段 `label`。因此使用 Prisma 构建如下的用户 Schema：
 
-```plain
+```prisma
 model User {
   id       String    @id
   createAt DateTime  @default(now())
@@ -231,7 +231,7 @@ async function verifyRegistrationRes(
 
 `newAuthenticator` 随创建用户时存储到其 device 中，device 表的 schema 如下，供参考：
 
-```plain
+```prisma
 model Device {
   credentialID        String   @id
   createAt            DateTime @default(now())
