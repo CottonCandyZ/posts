@@ -161,7 +161,7 @@ const clearTag = () => {
 
 可能会注意到上面两句关于 `sessionStorage` 语句，实际上还有一句在 `useEffect()` 中。
 
-```TS
+```ts
 useEffect(() => {
   const saveTags = sessionStorage.getItem("tags");
   if (saveTags) {
