@@ -120,8 +120,7 @@ useEffect(() => {
 
   setCurrent(api.selectedScrollSnap())
 
-  api.on('select', () => {
-    // [!code focus]
+  api.on('select', () => {  // [!code focus]
     setCurrent(api.selectedScrollSnap())
   })
 }, [api])
