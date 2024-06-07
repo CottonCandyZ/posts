@@ -348,7 +348,9 @@ const [[current, normal], setCurrent] = useState([before, false])
   <source src="/images/2024-06-07-microsoft-store-carousel/why.webm" type="video/webm" />
 </video>
 
-知道排布的方式和大致跳转的流程后，我们就可以根据我们定的新思路实现动画了：
+知道排布的方式和大致跳转的流程后，我们就可以根据我们定的新思路实现动画了。
+
+### 实现动画
 
 首先实现我们的 `animateFromTo`，它的作用就是确定我们每次动画的起点和终点，有了它就可以从任何地方起跳，它的参数就是真实的 index：
 
@@ -561,11 +563,15 @@ export default function BigCarousel(): JSX.Element {
 }
 ```
 
+## 效果展示
+
 到了激动人心的时刻，让我们来欣赏以下实现的结果，可以看到不再会卡顿，且非常的流畅的说！
 
 <video width="800" controls playsInline>
   <source src="/images/2024-06-07-microsoft-store-carousel/end.webm" type="video/webm" />
 </video>
+
+我后续可能会把它放到 blog 上来，但感觉没什么展示的途径，也可以直接嵌在这个 MDX 里（代办）。
 
 以上的新思路是我自己琢磨出来的，我觉得可能我需要看更多的代码以总结出更完善的思路，它肯定还不是最佳，仅供参考的说。
 
